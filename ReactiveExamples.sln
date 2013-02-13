@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FC8FA3
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleIntegrationPoint", "SampleIntegrationPoint\SampleIntegrationPoint.csproj", "{EE3A0919-2C89-4D3B-9377-E0BDC7AC4E08}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D3740458-0610-480E-8EFD-E2BEB898957E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3740458-0610-480E-8EFD-E2BEB898957E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3740458-0610-480E-8EFD-E2BEB898957E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE3A0919-2C89-4D3B-9377-E0BDC7AC4E08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE3A0919-2C89-4D3B-9377-E0BDC7AC4E08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE3A0919-2C89-4D3B-9377-E0BDC7AC4E08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE3A0919-2C89-4D3B-9377-E0BDC7AC4E08}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
