@@ -9,22 +9,27 @@ namespace SampleIntegrationPoint
 {
     public class StarDataPump
     {
-        static StarDataPump()
+        public StarDataPump()
         {
             Seed = (int) DateTime.Now.Ticks;
         }
 
-        private static Task CurrentTask { get; set; }
+        public StarDataPump(int seed)
+        {
+            Seed = seed;
+        }
 
-        protected static CancellationTokenSource CancellationTokenSource { get; set; }
+        private Task CurrentTask { get; set; }
 
-        protected static CancellationToken CancellationToken { get; set; }
+        protected CancellationTokenSource CancellationTokenSource { get; set; }
 
-        public static EventHandler<NewStarEventArgs> NewStarFound = delegate { };
+        protected CancellationToken CancellationToken { get; set; }
 
-        public static int Seed { get; set; }
+        public EventHandler<NewStarEventArgs> NewStarFound = delegate { };
 
-        public static void Start()
+        public int Seed { get; set; }
+
+        public void Start()
         {
             Stop();
             CancellationTokenSource = new CancellationTokenSource();
@@ -56,7 +61,7 @@ namespace SampleIntegrationPoint
             }
         }
 
-        public static void Stop()
+        public void Stop()
         {
             if ( CurrentTask == null )
             {

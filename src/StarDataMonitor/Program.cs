@@ -12,14 +12,13 @@ namespace StarDataMonitor
     {
         static void Main(string[] args)
         {
-            StarDataPump.Seed = 1;
-            StarDataPump.NewStarFound +=
+            var pump = new StarDataPump(1);
+            pump.NewStarFound +=
                     ( sender, eventArgs ) =>
                     Console.WriteLine( "{0}\t{1}", eventArgs.Star.StarType, eventArgs.Star.Mass );
-            StarDataPump.Start();
+            pump.Start();
             while ( true )
-            {
-            }
+                ;
         }
     }
 }
