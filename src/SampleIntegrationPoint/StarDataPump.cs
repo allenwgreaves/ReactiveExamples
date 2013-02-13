@@ -53,7 +53,7 @@ namespace SampleIntegrationPoint
                 {
                         UniqueID = ++uniqueID,
                         StarType = Enum.GetValues( typeof (StarType) ).Cast<StarType>().ElementAt( starTypeIndex ),
-                        Mass = random.NextDouble() * 1000000000000
+                        Mass = random.NextDouble() * 10
                 };
                 NewStarFound(this, new NewStarEventArgs( star ));
             }
