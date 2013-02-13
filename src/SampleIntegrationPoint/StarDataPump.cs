@@ -12,11 +12,7 @@ namespace SampleIntegrationPoint
         public StarDataPump()
         {
             Seed = (int) DateTime.Now.Ticks;
-        }
-
-        public StarDataPump(int seed)
-        {
-            Seed = seed;
+            UpperBound = TimeSpan.FromSeconds( 1 );
         }
 
         private Task CurrentTask { get; set; }
@@ -29,13 +25,14 @@ namespace SampleIntegrationPoint
 
         public int Seed { get; set; }
 
+        public TimeSpan UpperBound { get; set; }
+
         public void Start()
         {
             Stop();
             CancellationTokenSource = new CancellationTokenSource();
             CancellationToken = CancellationTokenSource.Token;
-            StarDataPump dataPump = new StarDataPump();
-            CurrentTask = Task.Factory.StartNew( dataPump.OnStart );
+            CurrentTask = Task.Factory.StartNew( OnStart );
         }
 
         private void OnStart()
@@ -49,7 +46,8 @@ namespace SampleIntegrationPoint
                     return;
                 }
                 double wait = random.NextDouble();
-                Thread.Sleep(TimeSpan.FromSeconds( wait ));
+                int sleepAmount = (int) ( UpperBound.TotalMilliseconds * wait );
+                Thread.Sleep(sleepAmount);
                 int starTypeIndex = random.Next(Enum.GetValues( typeof (StarType) ).Length);
                 Star star = new Star
                 {
