@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleReactive.Tests", "src\SampleReactive.Tests\SampleReactive.Tests.csproj", "{D3740458-0610-480E-8EFD-E2BEB898957E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{FC8FA31B-12B6-4E9B-8120-127F43A9F91D}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D3740458-0610-480E-8EFD-E2BEB898957E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3740458-0610-480E-8EFD-E2BEB898957E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3740458-0610-480E-8EFD-E2BEB898957E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3740458-0610-480E-8EFD-E2BEB898957E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
