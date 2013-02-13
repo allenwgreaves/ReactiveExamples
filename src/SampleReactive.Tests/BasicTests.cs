@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace SampleReactive.Tests
@@ -45,6 +47,59 @@ namespace SampleReactive.Tests
             observable.DistinctUntilChanged( new TwoOffComparer() )
                       .Subscribe( resultItems.Add );
             CollectionAssert.AreEqual( new List<int> { 1, 4 }, resultItems );
+        }
+
+        [TestMethod]
+        public void DeltaDistinctUntilChanged()
+        {
+            var items = new List<int> { 1, 2, 3, 4, 5 };
+            var observable = items.ToObservable();
+            var resultItems = new List<int>();
+            observable.DistinctUntilChanged(
+                new DeltaComparer<int>((x, y) => x - y) {Delta = 2})
+                      .Subscribe( resultItems.Add );
+            CollectionAssert.AreEqual( new List<int> { 1, 4 }, resultItems );
+        }
+
+        [TestMethod]
+        public void GetItemsTest()
+        {
+            var observable = GetSearchItems().ToObservable( Scheduler.Default );
+            observable
+                 .ObserveOnDispatcher()
+                      .Subscribe( searchItem => { /*...*/ } );
+            Thread.Sleep(-1);
+        }
+
+        private IEnumerable<int> GetSearchItems()
+        {
+            while ( true )
+            {
+                yield return 1;
+            }
+            yield break;
+        }
+    }
+
+    public class DeltaComparer<TItem> : IEqualityComparer<TItem>
+    {
+        public DeltaComparer(Func<TItem, TItem, double> compare )
+        {
+            Compare = compare;
+        }
+
+        public double Delta { get; set; }
+
+        public Func<TItem, TItem, double> Compare { get; set; } 
+
+        public bool Equals(TItem x, TItem y)
+        {
+            return Math.Abs(Compare(x, y)) <= Delta;
+        }
+
+        public int GetHashCode(TItem obj)
+        {
+            return obj.GetHashCode();
         }
     }
 
