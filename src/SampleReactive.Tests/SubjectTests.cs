@@ -52,5 +52,18 @@ namespace SampleReactive.Tests
             stars.OnNext( "Supergiant" );
             stars.OnCompleted();
         }
+
+        [TestMethod]
+        public void Dispose_DetachesSubscription()
+        {
+            string currentStar = string.Empty;
+            Subject<string> stars = new Subject<string>();
+            IDisposable subscription = stars.Subscribe( star => currentStar = star);
+            stars.OnNext( "Brown Dwarf" );
+            subscription.Dispose();
+            stars.OnNext( "Red Dwarf" );
+            stars.OnCompleted();
+            Assert.AreEqual<string>("Brown Dwarf", currentStar);
+        }
     }
 }
