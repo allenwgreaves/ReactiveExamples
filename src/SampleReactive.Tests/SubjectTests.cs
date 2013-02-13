@@ -25,6 +25,7 @@ namespace SampleReactive.Tests
             Subject<string> subject = new Subject<string>();
             subject.Subscribe( x => Assert.AreEqual<int>( currentThreadId, Thread.CurrentThread.ManagedThreadId ));
             subject.OnNext( "Red Dwarf" );
+            subject.OnCompleted();
         }
 
         [TestMethod]
@@ -36,6 +37,20 @@ namespace SampleReactive.Tests
             Assert.AreEqual<int>(0, i);
             i += 1;
             subject.OnNext( "Red Dwarf" );
+            subject.OnCompleted();
+        }
+
+        [TestMethod]
+        public void Where_FiltersOnNextCalls()
+        {
+            Subject<string> stars = new Subject<string>();
+            stars.Where(star => star != "Red Dwarf")
+                .Subscribe( star => Assert.AreNotEqual<string>("Red Dwarf", star));
+            stars.OnNext( "Brown Dwarf" );
+            stars.OnNext( "Red Dwarf" );
+            stars.OnNext( "White Dwarf" );
+            stars.OnNext( "Supergiant" );
+            stars.OnCompleted();
         }
     }
 }
