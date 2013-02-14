@@ -71,6 +71,29 @@ namespace SampleReactive.Tests
             Thread.Sleep(-1);
         }
 
+        [TestMethod]
+        public void ThrottleTest()
+        {
+            Subject<string> keyStrokeSubject = new Subject<string>();
+            var keyStrokeObservable = keyStrokeSubject.ObserveOn( Scheduler.Default );
+            var observable = keyStrokeObservable.SelectMany( search => GetSearchItems( search ) )
+                                                .Subscribe( searchItem => Console.WriteLine( searchItem ) );
+            Thread.Sleep(TimeSpan.FromSeconds( 10 ));
+            keyStrokeSubject.OnNext( "A" );
+            Thread.Sleep(TimeSpan.FromSeconds( 10 ));
+            keyStrokeSubject.OnNext( "AB" );
+            Thread.Sleep(-1);
+        }
+
+        private IEnumerable<string> GetSearchItems(string search)
+        {
+            while ( true )
+            {
+                yield return search;
+            }
+            yield break;
+        }
+
         private IEnumerable<int> GetSearchItems()
         {
             while ( true )
