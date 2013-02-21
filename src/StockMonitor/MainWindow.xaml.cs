@@ -102,7 +102,7 @@ namespace StockMonitor
             GetPriceChanges(StockTicker)
                     .GroupBy( stock => stock.StockName )
                     .Subscribe( groupedStocks => groupedStocks
-                                     .DistinctUntilChanged(new DeltaComparer<PriceChangedEventArgs>((x, y) => x.Price - y.Price) {Delta = 0.4} )
+                                     .DistinctUntilChanged( stock => Math.Ceiling(stock.Price) )
                                      .Scan( new StockChange(),
                                             ( stockChange, stock ) => new StockChange()
                                             {
@@ -121,6 +121,20 @@ namespace StockMonitor
                     eventHandler => stockTicker.OnPriceChanged += eventHandler,
                     eventHandler => stockTicker.OnPriceChanged -= eventHandler)
                              .Select(eventPattern => eventPattern.EventArgs);
+        }
+
+        private IObservable<PriceChangedEventArgs> GetPriceChangesTestData( StockTicker stockTicker )
+        {
+            return new[]
+            {
+                    new PriceChangedEventArgs { StockName = "Foo", Price = 0.1, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Bar", Price = 20.1, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Bar", Price = 20.2, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Foo", Price = 0.7, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Bar", Price = 20, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Foo", Price = 1.1, Volume = 100 },
+                    new PriceChangedEventArgs { StockName = "Bar", Price = 18.1, Volume = 100 }
+            }.ToObservable();
         }
 
         private StockTicker StockTicker { get; set; }
